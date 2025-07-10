@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presuniv Events</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-university"></i> Presuniv Events </h1>
+            <p>Your Gateway to Unforgettable Campus Experiences!</p>
+        </header>
+
+        <nav>
+            <button id="dashboard-btn" class="nav-btn active"><i class="fas fa-chart-line"></i> Dashboard</button>
+            <button id="events-btn" class="nav-btn"><i class="fas fa-calendar-alt"></i> All Events</button>
+            <button id="create-event-btn" class="nav-btn"><i class="fas fa-plus-circle"></i> Create Event</button>
+            <button id="registrations-btn" class="nav-btn"><i class="fas fa-users"></i> Registrations</button>
+            <button id="calendar-btn" class="nav-btn"><i class="fas fa-calendar-days"></i> Calendar</button>
+        </nav>
+
+        <main id="content">
+            <section id="dashboard-view" class="view active">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Events</h3>
+                        <p id="total-events-stat"><i class="fas fa-list-alt"></i> Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Events</h3>
+                        <p id="active-events-stat"><i class="fas fa-calendar-check"></i> Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Registrations</h3>
+                        <p id="total-registrations-stat"><i class="fas fa-user-plus"></i> Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Upcoming (7 Days)</h3>
+                        <p id="upcoming-events-stat"><i class="fas fa-bell"></i> Loading...</p>
+                    </div>
+                </div>
+
+                <h3>Recent Events</h3>
+                <div id="recent-events-list" class="event-list">
+                    <p>Loading recent events...</p>
+                </div>
+            </section>
+
+            <section id="events-view" class="view">
+                <h2>All Events</h2>
+                <div class="filter-controls">
+                    <input type="text" id="event-search" placeholder="Search events by title, description, location...">
+                    <select id="event-category-filter">
+                        <option value="">All Categories</option>
+                        <option value="Academic">Academic</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Seminar">Seminar</option>
+                    </select>
+                    <button id="apply-filter-btn" class="btn">Apply Filters</button>
+                </div>
+                <div id="events-list" class="event-list">
+                    <p>Loading events...</p>
+                </div>
+            </section>
+
+            <section id="create-event-view" class="view">
+                <h2>Create New Event</h2>
+                <form id="create-event-form">
+                    <div class="form-group">
+                        <label for="event-title">Event Title:</label>
+                        <input type="text" id="event-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-category">Category:</label>
+                        <select id="event-category" required>
+                            <option value="">Select Category</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Cultural">Cultural</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Seminar">Seminar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-date">Date:</label>
+                        <input type="date" id="event-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-time">Time:</label>
+                        <input type="time" id="event-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-location">Location:</label>
+                        <input type="text" id="event-location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-description">Description:</label>
+                        <textarea id="event-description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-capacity">Capacity:</label>
+                        <input type="number" id="event-capacity" min="1" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Create Event</button>
+                </form>
+                <div id="create-event-message" class="message"></div>
+            </section>
+
+            <section id="register-event-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>Register for Event</h2>
+                    <h3 id="modal-event-title"></h3>
+                    <p><strong>Date:</strong> <span id="modal-event-date"></span></p>
+                    <p><strong>Time:</strong> <span id="modal-event-time"></span></p>
+                    <p><strong>Location:</strong> <span id="modal-event-location"></span></p>
+                    <p><strong>Description:</strong> <span id="modal-event-description"></span></p>
+                    <p><strong>Capacity:</strong> <span id="modal-event-capacity"></span></p>
+                    <p><strong>Registered:</strong> <span id="modal-event-registered"></span></p>
+
+                    <form id="register-form">
+                        <input type="hidden" id="register-event-id">
+                        <div class="form-group">
+                            <label for="student-name">Full Name:</label>
+                            <input type="text" id="student-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-id">Student ID:</label>
+                            <input type="text" id="student-id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-email">Email:</label>
+                            <input type="email" id="student-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-phone">Phone:</label>
+                            <input type="tel" id="student-phone">
+                        </div>
+                        <button type="submit" class="btn primary-btn">Confirm Registration</button>
+                    </form>
+                    <div id="register-message" class="message"></div>
+                </div>
+            </section>
+
+            <section id="registrations-view" class="view">
+                <h2>All Registrations</h2>
+                <div id="registrations-list" class="event-list">
+                    <p>Loading registrations...</p>
+                </div>
+            </section>
+
+            <section id="calendar-view" class="view">
+                <h2>Event Calendar</h2>
+                <div class="calendar-controls">
+                    <button id="prev-month-btn" class="btn"><i class="fas fa-chevron-left"></i></button>
+                    <h3 id="current-month-year"></h3>
+                    <button id="next-month-btn" class="btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid">
+                    <!-- Calendar days will be generated here -->
+                </div>
+                <div id="calendar-events-list" class="event-list">
+                    <!-- Events for selected date will appear here -->
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
