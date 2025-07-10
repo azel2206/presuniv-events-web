@@ -1,31 +1,24 @@
-// frontend/script.js
 
-// Base URL for the backend API
-const API_BASE_URL = 'http://localhost:5000/api'; // Adjust if your backend runs on a different host/port
+const API_BASE_URL = 'http://localhost:5000/api'; 
 
-// DOM Elements
 const navButtons = document.querySelectorAll('.nav-btn');
 const views = document.querySelectorAll('.view');
 const contentDiv = document.getElementById('content');
 
-// Dashboard Elements
 const totalEventsStat = document.getElementById('total-events-stat');
 const activeEventsStat = document.getElementById('active-events-stat');
 const totalRegistrationsStat = document.getElementById('total-registrations-stat');
 const upcomingEventsStat = document.getElementById('upcoming-events-stat');
 const recentEventsList = document.getElementById('recent-events-list');
 
-// Events View Elements
 const eventSearchInput = document.getElementById('event-search');
 const eventCategoryFilter = document.getElementById('event-category-filter');
 const applyFilterBtn = document.getElementById('apply-filter-btn');
 const eventsList = document.getElementById('events-list');
 
-// Create Event Elements
 const createEventForm = document.getElementById('create-event-form');
 const createEventMessage = document.getElementById('create-event-message');
 
-// Register Event Modal Elements
 const registerEventModal = document.getElementById('register-event-modal');
 const closeButton = registerEventModal.querySelector('.close-button');
 const modalEventTitle = document.getElementById('modal-event-title');
@@ -39,10 +32,8 @@ const registerEventIdInput = document.getElementById('register-event-id');
 const registerForm = document.getElementById('register-form');
 const registerMessage = document.getElementById('register-message');
 
-// Registrations View Elements
 const registrationsList = document.getElementById('registrations-list');
 
-// Calendar View Elements
 const prevMonthBtn = document.getElementById('prev-month-btn');
 const nextMonthBtn = document.getElementById('next-month-btn');
 const currentMonthYearHeader = document.getElementById('current-month-year');
@@ -51,9 +42,7 @@ const calendarEventsList = document.getElementById('calendar-events-list');
 
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
-let selectedCalendarDate = null; // To store the currently selected date in the calendar
-
-// --- Utility Functions ---
+let selectedCalendarDate = null; 
 
 /**
  * Shows a specific view and hides others.
@@ -87,10 +76,8 @@ function displayMessage(messageDiv, message, type) {
         messageDiv.style.display = 'none';
         messageDiv.textContent = '';
         messageDiv.className = 'message';
-    }, 5000); // Hide after 5 seconds
-}
+    }, 5000); }
 
-// --- API Calls ---
 
 /**
  * Fetches dashboard statistics and recent events.
@@ -158,8 +145,8 @@ async function createNewEvent(eventData) {
 
         if (response.ok) {
             displayMessage(createEventMessage, result.message || 'Event created successfully!', 'success');
-            createEventForm.reset(); // Clear form
-            fetchEvents(); // Refresh event list
+            createEventForm.reset(); 
+            fetchEvents(); 
         } else {
             displayMessage(createEventMessage, result.error || 'Failed to create event.', 'error');
         }
@@ -176,13 +163,12 @@ async function createNewEvent(eventData) {
  */
 async function registerStudentForEvent(eventId, registrationData) {
         try {
-            // eventId is already in the URL path, no need to send it in the body again
             const response = await fetch(`${API_BASE_URL}/events/${eventId}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(registrationData), // Send only registrationData
+                body: JSON.stringify(registrationData), 
             });
             const result = await response.json();
 
@@ -190,7 +176,7 @@ async function registerStudentForEvent(eventId, registrationData) {
                 displayMessage(registerMessage, result.message, 'success');
                 setTimeout(() => {
                     registerEventModal.classList.remove('active');
-                    fetchEvents(); // Refresh events list to update registration counts
+                    fetchEvents(); 
                 }, 2000);
             } else {
                 displayMessage(registerMessage, result.message || result.error || 'Registration failed.', 'error');
@@ -262,7 +248,6 @@ async function fetchEventsByDate(dateStr) {
     }
 }
 
-// --- Rendering Functions ---
 
 /**
  * Renders recent events on the dashboard.
@@ -320,7 +305,6 @@ function renderEvents(events) {
         eventsList.appendChild(card);
     });
 
-    // Add event listeners to all new register buttons
     document.querySelectorAll('.register-btn').forEach(button => {
         button.addEventListener('click', (e) => {
             const eventId = parseInt(e.target.dataset.eventId);
@@ -346,14 +330,13 @@ async function openRegisterModal(eventId) {
             modalEventDescription.textContent = event.description;
             modalEventCapacity.textContent = event.capacity;
             modalEventRegistered.textContent = event.registrations.length;
-            registerEventIdInput.value = event.id; // Set hidden input for form submission
-
-            registerForm.reset(); // Clear previous registration data
-            registerMessage.style.display = 'none'; // Hide previous messages
+            registerEventIdInput.value = event.id; 
+            registerForm.reset(); 
+            registerMessage.style.display = 'none'; 
             registerEventModal.classList.add('active');
         } else {
             console.error('Error fetching event details for modal:', event.error);
-            alert('Could not load event details for registration.'); // Use alert for simplicity here, but a custom modal would be better
+            alert('Could not load event details for registration.'); 
         }
     } catch (error) {
         console.error('Network error fetching event details:', error);
@@ -405,17 +388,15 @@ function renderCalendar(year, month, eventsInMonth) {
         calendarGrid.appendChild(dayNameDiv);
     });
 
-    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday, etc.
-    const daysInMonth = new Date(year, month + 1, 0).getDate(); // Last day of the month
+    const firstDayOfMonth = new Date(year, month, 1).getDay(); 
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Add empty divs for days before the first day of the month
     for (let i = 0; i < firstDayOfMonth; i++) {
         const emptyDiv = document.createElement('div');
         emptyDiv.className = 'empty-day';
         calendarGrid.appendChild(emptyDiv);
     }
 
-    // Add actual days
     for (let day = 1; day <= daysInMonth; day++) {
         const dayDiv = document.createElement('div');
         const fullDate = new Date(year, month, day);
@@ -425,24 +406,20 @@ function renderCalendar(year, month, eventsInMonth) {
         dayDiv.dataset.date = dateString;
         dayDiv.classList.add('calendar-day');
 
-        // Check if there are events on this day
         const hasEvents = eventsInMonth.some(event => event.date === dateString);
         if (hasEvents) {
             dayDiv.classList.add('day-with-event');
         }
 
-        // Highlight selected day
         if (selectedCalendarDate === dateString) {
             dayDiv.classList.add('selected-day');
         }
 
         dayDiv.addEventListener('click', () => {
-            // Remove highlight from previously selected day
             const previouslySelected = document.querySelector('.calendar-grid .selected-day');
             if (previouslySelected) {
                 previouslySelected.classList.remove('selected-day');
             }
-            // Add highlight to new selected day
             dayDiv.classList.add('selected-day');
             selectedCalendarDate = dateString;
             fetchEventsByDate(dateString);
@@ -464,7 +441,7 @@ function renderCalendarEventsList(events) {
     }
     events.forEach(event => {
         const card = document.createElement('div');
-        card.className = 'event-card'; // Reusing event-card style
+        card.className = 'event-card'; 
         card.innerHTML = `
             <h3>${event.title}</h3>
             <p class="meta"><i class="fas fa-clock"></i> ${event.time}</p>
@@ -479,9 +456,7 @@ function renderCalendarEventsList(events) {
     });
 }
 
-// --- Event Listeners ---
 
-// Navigation buttons
 document.getElementById('dashboard-btn').addEventListener('click', () => {
     showView('dashboard-view');
     fetchDashboardData();
@@ -489,13 +464,13 @@ document.getElementById('dashboard-btn').addEventListener('click', () => {
 
 document.getElementById('events-btn').addEventListener('click', () => {
     showView('events-view');
-    fetchEvents(); // Load all events initially
+    fetchEvents(); 
 });
 
 document.getElementById('create-event-btn').addEventListener('click', () => {
     showView('create-event-view');
-    createEventForm.reset(); // Clear form on view change
-    createEventMessage.style.display = 'none'; // Hide message
+    createEventForm.reset(); 
+    createEventMessage.style.display = 'none'; 
 });
 
 document.getElementById('registrations-btn').addEventListener('click', () => {
@@ -507,18 +482,15 @@ document.getElementById('calendar-btn').addEventListener('click', async () => {
     showView('calendar-view');
     const events = await fetchCalendarEvents(currentYear, currentMonth);
     renderCalendar(currentYear, currentMonth, events);
-    calendarEventsList.innerHTML = '<p>Select a date to see events.</p>'; // Clear event list when month changes
-    selectedCalendarDate = null; // Reset selected date
-});
+    calendarEventsList.innerHTML = '<p>Select a date to see events.</p>'; 
+    selectedCalendarDate = null; });
 
-// Event filtering
 applyFilterBtn.addEventListener('click', () => {
     const category = eventCategoryFilter.value;
     const searchTerm = eventSearchInput.value;
     fetchEvents(category, searchTerm);
 });
 
-// Create Event Form submission
 createEventForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const eventData = {
@@ -533,19 +505,16 @@ createEventForm.addEventListener('submit', (e) => {
     createNewEvent(eventData);
 });
 
-// Register Event Modal close button
 closeButton.addEventListener('click', () => {
     registerEventModal.classList.remove('active');
 });
 
-// Close modal if clicked outside content
 window.addEventListener('click', (event) => {
     if (event.target === registerEventModal) {
         registerEventModal.classList.remove('active');
     }
 });
 
-// Register Form submission
 registerForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const eventId = parseInt(registerEventIdInput.value);
@@ -558,7 +527,6 @@ registerForm.addEventListener('submit', (e) => {
     registerStudentForEvent(eventId, registrationData);
 });
 
-// Calendar navigation
 prevMonthBtn.addEventListener('click', async () => {
     currentMonth--;
     if (currentMonth < 0) {
@@ -567,8 +535,8 @@ prevMonthBtn.addEventListener('click', async () => {
     }
     const events = await fetchCalendarEvents(currentYear, currentMonth);
     renderCalendar(currentYear, currentMonth, events);
-    calendarEventsList.innerHTML = '<p>Select a date to see events.</p>'; // Clear event list when month changes
-    selectedCalendarDate = null; // Reset selected date
+    calendarEventsList.innerHTML = '<p>Select a date to see events.</p>'; 
+    selectedCalendarDate = null; 
 });
 
 nextMonthBtn.addEventListener('click', async () => {
@@ -579,13 +547,11 @@ nextMonthBtn.addEventListener('click', async () => {
     }
     const events = await fetchCalendarEvents(currentYear, currentMonth);
     renderCalendar(currentYear, currentMonth, events);
-    calendarEventsList.innerHTML = '<p>Select a date to see events.</p>'; // Clear event list when month changes
-    selectedCalendarDate = null; // Reset selected date
+    calendarEventsList.innerHTML = '<p>Select a date to see events.</p>'; 
+    selectedCalendarDate = null; 
 });
 
-// --- Initial Load ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Show dashboard by default
     showView('dashboard-view');
     fetchDashboardData();
 });

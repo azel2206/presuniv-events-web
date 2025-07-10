@@ -1,11 +1,9 @@
-/* frontend/style.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
 :root {
-    --primary-color: #4A90E2; /* Blue */
-    --secondary-color: #50E3C2; /* Teal */
-    --accent-color: #F5A623; /* Orange */
+    --primary-color: #4A90E2; 
+    --secondary-color: #50E3C2; 
+    --accent-color: #F5A623; 
     --background-color: #F4F7F6;
     --card-background: #FFFFFF;
     --text-color: #333333;
@@ -37,12 +35,12 @@ body {
     width: 100%;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 220px 1fr; /* Nav on left, content on right */
+    grid-template-columns: 220px 1fr; 
     gap: 30px;
 }
 
 header {
-    grid-column: 1 / -1; /* Span across both columns */
+    grid-column: 1 / -1;
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
@@ -104,7 +102,7 @@ nav {
 }
 
 .nav-btn.active:hover {
-    background-color: var(--primary-color); /* Keep same color on hover for active */
+    background-color: var(--primary-color); 
 }
 
 main {
@@ -112,7 +110,7 @@ main {
 }
 
 .view {
-    display: none; /* Hidden by default */
+    display: none; 
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -134,7 +132,6 @@ h2 {
     padding-bottom: 10px;
 }
 
-/* Dashboard Styles */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -180,7 +177,6 @@ h2 {
     transform: translateY(-5px);
 }
 
-/* Event List Styles */
 .event-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -251,12 +247,12 @@ h2 {
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s ease;
-    align-self: flex-end; /* Align button to the bottom right */
+    align-self: flex-end; 
     margin-top: 15px;
 }
 
 .event-card .register-btn:hover {
-    background-color: #3a7bd5; /* Darker blue */
+    background-color: #3a7bd5;
 }
 
 .event-card .register-btn:disabled {
@@ -264,7 +260,6 @@ h2 {
     cursor: not-allowed;
 }
 
-/* Forms */
 .form-group {
     margin-bottom: 20px;
 }
@@ -344,17 +339,16 @@ h2 {
     border: 1px solid var(--border-color);
 }
 
-/* Modal Styles */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.6); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -418,13 +412,12 @@ h2 {
     margin-bottom: 8px;
 }
 
-/* Messages */
 .message {
     padding: 15px;
     margin-top: 20px;
     border-radius: 8px;
     font-weight: 600;
-    display: none; /* Hidden by default */
+    display: none; 
 }
 
 .message.success {
@@ -439,7 +432,6 @@ h2 {
     border: 1px solid #f5c6cb;
 }
 
-/* Calendar Styles */
 .calendar-controls {
     display: flex;
     justify-content: space-between;
@@ -487,9 +479,8 @@ h2 {
     font-weight: 600;
     padding: 12px 5px;
     border: none;
-    border-radius: 0; /* No rounded corners for day names */
+    border-radius: 0; 
 }
-
 .calendar-grid .empty-day {
     background-color: #f9f9f9;
     cursor: default;
@@ -502,7 +493,7 @@ h2 {
 }
 
 .calendar-grid .day-with-event:hover {
-    background-color: #43c1a2; /* Darker teal */
+    background-color: #43c1a2; 
 }
 
 .calendar-grid .selected-day {
@@ -513,19 +504,18 @@ h2 {
 }
 
 .calendar-grid .selected-day:hover {
-    background-color: #e2971f; /* Darker orange */
+    background-color: #e2971f; 
 }
 
-/* Responsive Design */
 @media (max-width: 900px) {
     .container {
-        grid-template-columns: 1fr; /* Stack nav and content */
+        grid-template-columns: 1fr; 
         padding: 20px;
     }
 
     nav {
-        flex-direction: row; /* Horizontal nav for smaller screens */
-        overflow-x: auto; /* Allow scrolling for nav buttons */
+        flex-direction: row; 
+        overflow-x: auto; 
         padding-bottom: 10px;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
@@ -533,8 +523,8 @@ h2 {
     }
 
     .nav-btn {
-        flex-shrink: 0; /* Prevent buttons from shrinking */
-        white-space: nowrap; /* Keep text on one line */
+        flex-shrink: 0; 
+        white-space: nowrap; 
     }
 
     main {
@@ -568,6 +558,6 @@ h2 {
     }
 
     .event-list {
-        grid-template-columns: 1fr; /* Single column for event cards */
+        grid-template-columns: 1fr; 
     }
 }
